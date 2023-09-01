@@ -2,7 +2,7 @@ Reproduce some bizarre behavior of the thrift compiler.
 
 Dangerous command to run:
 
-    $ systemd-run --user --scope --property=MemoryMax=4G make repro
+    $ systemd-run --user --scope --property=MemoryMax=4G make repro ENUM_VALUE_COUNT=2000
     Running scope as unit: run-rdd800bee321a4f49a38fa7b1dcefebb5.scope
     mkdir -p generated
     echo 'include "bar.thrift"' > generated/foo.thrift
