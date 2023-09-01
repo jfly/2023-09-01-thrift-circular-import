@@ -1,13 +1,11 @@
-Reproduce some bizarre behavior of the thrift compiler.
+Reproduce some bizarre behavior of the thrift compiler (reproducible on thrift 0.18.1).
 
-Dangerous command to run:
+Dangerous command to run (either runs forever, or just consumes a ton of ram before segfaulting):
 
-    $ systemd-run --user --scope --property=MemoryMax=4G make repro ENUM_VALUE_COUNT=2000
-    Running scope as unit: run-rdd800bee321a4f49a38fa7b1dcefebb5.scope
-    mkdir -p generated
-    echo 'include "bar.thrift"' > generated/foo.thrift
-    printf 'include "large-enum.thrift"\ninclude "foo.thrift"' > generated/bar.thrift
-    python -c 'print("enum LargeEnum {"); print("\n".join(f"    FOO{i} = {i}," for i in range(2000))); print("}\n");' > generated/large-enum.thrift
-    (cd generated; thrift --allow-64bit-consts --gen py:slots foo.thrift)
-    make: *** [Makefile:3: repro] Terminated
-    [1]    49796 terminated  systemd-run --user --scope --property=MemoryMax=4G make repro
+    $ thrift --version
+    Thrift version 0.18.1
+    $ make repro ENUM_VALUE_COUNT=2000
+
+Here's a graph of CPU and RAM on my machine while running the above command:
+
+![graph of CPU and RAM](screenshots/2023-09-01_16-30-26_pattern.png)

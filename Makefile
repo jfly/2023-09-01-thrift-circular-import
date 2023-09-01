@@ -2,7 +2,7 @@ ENUM_VALUE_COUNT ?= 2000
 
 .PHONY: repro
 repro: gen-thrift-source
-	(cd generated; thrift --allow-64bit-consts --gen py:slots foo.thrift)
+	(cd generated; thrift --allow-64bit-consts --gen js:ts,es6 foo.thrift)
 
 .PHONY: gen-thrift-source
 gen-thrift-source:
